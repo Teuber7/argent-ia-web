@@ -433,9 +433,8 @@ input, textarea, select { font: inherit; color: inherit; }
 /* =============================================================
    9. Soluciones
    ============================================================= */
-.solutions-grid { display: grid; grid-template-columns: 1fr; gap: 1.1rem; }
-@media (min-width: 720px)  { .solutions-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1180px) { .solutions-grid { grid-template-columns: repeat(3, 1fr); } }
+/* Las tarjetas viven dentro de un carrusel: ancho fijo, no se achican */
+.solutions-track > .sol-card { flex: 0 0 min(88vw, 380px); }
 
 .sol-card {
   --rx: 0deg; --ry: 0deg;
@@ -488,29 +487,6 @@ input, textarea, select { font: inherit; color: inherit; }
 .sol-savings { margin-top: .6rem; font-size: .78rem; color: var(--ink-mute); }
 
 /* =============================================================
-   10. Comparador
-   ============================================================= */
-.comparator { background: var(--bg-2); border-block: 1px solid var(--line); }
-.comp-tabs { display: flex; gap: .6rem; margin-bottom: 2.4rem; flex-wrap: wrap; }
-.comp-tab {
-  padding: .55rem 1.1rem; border-radius: 999px; border: 1px solid var(--line);
-  font-size: .84rem; color: var(--ink-mute); transition: all .3s var(--ease-out);
-}
-.comp-tab.is-active { border-color: var(--gold); color: var(--gold); background: rgba(240,180,41,.08); }
-
-.comp-grid { display: grid; grid-template-columns: 1fr; gap: 1.6rem; }
-@media (min-width: 860px) { .comp-grid { grid-template-columns: repeat(2, 1fr); } }
-.comp-metric { display: flex; flex-direction: column; gap: .6rem; }
-.comp-metric-label { font-size: .92rem; color: var(--ink-soft); display: flex; justify-content: space-between; }
-.comp-bar-row { display: flex; align-items: center; gap: .8rem; }
-.comp-bar-tag { width: 62px; flex: none; font-family: var(--mono); font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim); }
-.comp-bar-track { flex: 1; height: 10px; border-radius: 999px; background: var(--bg-3); overflow: hidden; }
-.comp-bar-fill { height: 100%; border-radius: 999px; width: 0%; transition: width 1.1s var(--ease-soft); }
-.comp-bar-fill.before { background: linear-gradient(90deg, var(--red), #ff8a65); }
-.comp-bar-fill.after { background: linear-gradient(90deg, var(--azul), var(--celeste)); }
-.comp-bar-val { width: 46px; flex: none; text-align: right; font-family: var(--mono); font-size: .78rem; color: var(--ink-mute); }
-
-/* =============================================================
    11. Calculadora
    ============================================================= */
 .calc-panel {
@@ -518,8 +494,8 @@ input, textarea, select { font: inherit; color: inherit; }
   border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line);
 }
 @media (min-width: 960px) { .calc-panel { grid-template-columns: 1fr 1fr; } }
-.calc-form { padding: clamp(1.8rem, 4vw, 3rem); background: var(--bg-2); }
-.calc-field { margin-bottom: 1.6rem; }
+.calc-form { padding: clamp(1.3rem, 2.6vw, 2rem); background: var(--bg-2); }
+.calc-field { margin-bottom: 1.05rem; }
 .calc-field label { display: flex; justify-content: space-between; font-size: .86rem; color: var(--ink-mute); margin-bottom: .6rem; }
 .calc-field label .val { font-family: var(--mono); color: var(--gold); }
 .calc-field input[type="range"] {
@@ -535,24 +511,26 @@ input, textarea, select { font: inherit; color: inherit; }
   width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--bg-2);
   background: var(--brand-gradient); cursor: pointer;
 }
-.calc-note { font-size: .76rem; color: var(--ink-dim); margin-top: 1.8rem; }
+.calc-note { font-size: .74rem; color: var(--ink-dim); margin-top: 1rem; }
 
 .calc-results {
-  padding: clamp(1.8rem, 4vw, 3rem);
+  padding: clamp(1.3rem, 2.6vw, 2rem);
   background:
     radial-gradient(120% 100% at 100% 0%, rgba(37, 99, 235,.18), transparent 60%),
     var(--bg-3);
-  display: flex; flex-direction: column; gap: 1.4rem;
+  display: flex; flex-direction: column; gap: .8rem;
 }
-.calc-result-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: .7rem; border-bottom: 1px solid var(--line); }
-.calc-result-row:last-child { border-bottom: 0; }
-.calc-result-label { color: var(--ink-mute); font-size: .88rem; }
-.calc-result-val { font-family: var(--mono); font-size: clamp(1.2rem, 2vw, 1.7rem); font-weight: 500; }
+/* Dos columnas de resultados en pantallas anchas: la mitad de alto */
+.calc-rows { display: grid; grid-template-columns: 1fr; gap: 0 1.6rem; }
+@media (min-width: 620px) { .calc-rows { grid-template-columns: 1fr 1fr; } }
+.calc-result-row { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; padding-block: .45rem; border-bottom: 1px solid var(--line); }
+.calc-result-label { color: var(--ink-mute); font-size: .82rem; }
+.calc-result-val { font-family: var(--mono); font-size: clamp(1rem, 1.5vw, 1.3rem); font-weight: 500; }
 .calc-result-val.money { color: var(--gold); }
 .calc-result-val.hours { color: var(--celeste); }
 .calc-result-val.roi { color: var(--green); }
 .calc-hero-num {
-  font-family: var(--mono); font-size: clamp(2.3rem, 5vw, 3.6rem); color: var(--gold); font-weight: 600; line-height: 1;
+  font-family: var(--mono); font-size: clamp(1.9rem, 3.4vw, 2.7rem); color: var(--gold); font-weight: 600; line-height: 1;
 }
 .calc-hero-num.flash { animation: valFlash .7s var(--ease-out); }
 @keyframes valFlash {
@@ -562,29 +540,27 @@ input, textarea, select { font: inherit; color: inherit; }
 .calc-hero-label { color: var(--ink-mute); font-size: .9rem; margin-top: .5rem; }
 
 /* =============================================================
-   12. Casos
+   12. Carrusel horizontal (soluciones)
    ============================================================= */
-.cases-track { display: flex; gap: 1.2rem; overflow-x: auto; overflow-y: visible; padding-block: .5rem 1.5rem; scroll-snap-type: x proximity; scrollbar-width: none; }
-.cases-track::-webkit-scrollbar { display: none; }
-.case-card {
-  scroll-snap-align: start; flex: 0 0 min(88vw, 420px);
-  border-radius: var(--radius); padding: 1.9rem;
-  display: flex; flex-direction: column; gap: 1.1rem;
+.carousel { position: relative; }
+.carousel-track {
+  display: flex; gap: 1.1rem; overflow-x: auto; overflow-y: visible;
+  padding-block: .4rem 1.1rem; scroll-snap-type: x mandatory;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
-.case-top { display: flex; justify-content: space-between; align-items: start; gap: 1rem; }
-.case-card h3 { font-size: 1.2rem; }
-.case-sector { font-size: .78rem; color: var(--ink-mute); margin-top: .3rem; }
-.case-metric { text-align: right; flex: none; }
-.case-metric .num { font-family: var(--mono); font-size: 1.35rem; color: var(--gold); }
-.case-metric .lbl { font-size: .68rem; color: var(--ink-mute); text-transform: uppercase; letter-spacing: .06em; }
-.case-block { font-size: .86rem; color: var(--ink-mute); }
-.case-block b { color: var(--ink-soft); display: block; font-size: .74rem; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .3rem; font-family: var(--mono); }
-.cases-controls { display: flex; gap: .7rem; margin-top: .5rem; }
-.cases-controls button {
-  width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line);
-  display: grid; place-items: center; transition: border-color .3s, transform .3s;
+.carousel-track::-webkit-scrollbar { display: none; }
+.carousel-track > * { scroll-snap-align: start; }
+.carousel-controls { display: flex; align-items: center; gap: .7rem; }
+.carousel-btn {
+  width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--bg-2); border: 1px solid var(--line); color: var(--ink-soft);
+  cursor: pointer; font-size: 1.05rem; transition: all .25s var(--ease-out);
 }
-.cases-controls button:hover { border-color: var(--gold); transform: translateY(-2px); }
+.carousel-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+.carousel-btn:disabled { opacity: .3; cursor: default; }
+.carousel-hint { font-family: var(--mono); font-size: .7rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-dim); margin-left: .3rem; }
+@media (min-width: 900px) { .carousel-hint { display: none; } }
 
 /* =============================================================
    13. Proceso — timeline con línea que se dibuja al scrollear
@@ -724,53 +700,50 @@ input, textarea, select { font: inherit; color: inherit; }
 .footer-socials { display: flex; gap: 1rem; }
 
 /* =============================================================
-   17b. Secciones claras — blanco + celeste bandera
-   Re-scopea los tokens: los componentes internos se adaptan solos.
+   17b. Secciones elevadas — oscuras, apenas más claras que el fondo
+   Mantienen el ritmo visual de la página sin cortar con blanco.
    ============================================================= */
 .section-light {
-  /* base clara */
-  --bg:        #f8fbfe;
-  --bg-2:      #ffffff;
-  --bg-3:      #dbe7f2;
-  --line:      rgba(16, 23, 36, 0.12);
-  --line-soft: rgba(16, 23, 36, 0.08);
-  /* texto oscuro */
-  --ink:       #101724;
-  --ink-soft:  #22314a;
-  --ink-mute:  #51617a;
-  --ink-dim:   #8595ab;
-  /* Sol de Mayo profundo para contraste sobre blanco */
-  --gold:      var(--gold-deep);
-  --silver:    #8fa6bd;
+  /* base oscura, un escalón por encima del fondo general */
+  --bg:        #0e1016;
+  --bg-2:      #151821;
+  --bg-3:      #1d212c;
+  --line:      rgba(199, 203, 214, 0.14);
+  --line-soft: rgba(199, 203, 214, 0.08);
+  /* texto claro */
+  --ink:       #f5f6f8;
+  --ink-soft:  #c7cbd6;
+  --ink-mute:  #9aa0ae;
+  --ink-dim:   #5b606e;
+  /* Sol de Mayo pleno: sobre oscuro no necesita apagarse */
+  --gold:      #f0b429;
+  --silver:    #c7cbd6;
 
   background:
-    radial-gradient(55% 45% at 88% 0%, rgba(240, 180, 41, 0.12), transparent 70%),
-    radial-gradient(45% 40% at 0% 100%, rgba(124, 194, 240, 0.18), transparent 70%),
-    linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+    radial-gradient(55% 45% at 88% 0%, rgba(240, 180, 41, 0.10), transparent 70%),
+    radial-gradient(45% 40% at 0% 100%, rgba(124, 194, 240, 0.12), transparent 70%),
+    linear-gradient(180deg, #0e1016 0%, #16191f 100%);
   color: var(--ink);
   border-block: 1px solid var(--line);
 }
 .section-light .gradient-text {
-  background: linear-gradient(135deg, var(--azul) 0%, #d99a12 100%);
+  background: var(--brand-gradient);
   -webkit-background-clip: text; background-clip: text;
 }
 .section-light .glass {
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(16, 23, 36, 0.08);
-  box-shadow: 0 18px 44px -22px rgba(16, 23, 36, 0.18);
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(199, 203, 214, 0.12);
+  box-shadow: 0 18px 44px -22px rgba(0, 0, 0, 0.65);
 }
 @supports (backdrop-filter: blur(20px)) {
   .section-light .glass {
-    background: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(22px) saturate(140%);
     -webkit-backdrop-filter: blur(22px) saturate(140%);
   }
 }
-.section-light .eyebrow::before { box-shadow: 0 0 12px 2px rgba(176, 119, 8, .45); }
-.section-light .comp-tab.is-active {
-  border-color: var(--azul); color: var(--azul); background: rgba(37, 99, 235, .07);
-}
-.section-light .sol-icon { color: var(--azul); }
+.section-light .eyebrow::before { box-shadow: 0 0 12px 2px rgba(240, 180, 41, .45); }
+.section-light .sol-icon { color: var(--celeste); }
 .section-light ::selection { background: var(--azul); color: #fff; }
 
 /* =============================================================

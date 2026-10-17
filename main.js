@@ -111,75 +111,6 @@
     target.innerHTML = data.solutions.map(solutionCard).join("");
   }
 
-  function comparatorMetricsHTML(metrics) {
-    return metrics.map(function (m) {
-      return (
-        '<div class="comp-metric" data-reveal>' +
-        '<div class="comp-metric-label"><span>' + escHTML(m.label) + "</span></div>" +
-        '<div class="comp-bar-row"><span class="comp-bar-tag">Antes</span>' +
-        '<div class="comp-bar-track"><div class="comp-bar-fill before" data-comp-bar data-comp-val="' + m.before + '"></div></div>' +
-        '<span class="comp-bar-val">' + m.before + "%</span></div>" +
-        '<div class="comp-bar-row"><span class="comp-bar-tag">Después</span>' +
-        '<div class="comp-bar-track"><div class="comp-bar-fill after" data-comp-bar data-comp-val="' + m.after + '"></div></div>' +
-        '<span class="comp-bar-val">' + m.after + "%</span></div>" +
-        "</div>"
-      );
-    }).join("");
-  }
-
-  function playComparatorBars(scope) {
-    $$("[data-comp-bar]", scope).forEach(function (b) {
-      var v = b.getAttribute("data-comp-val");
-      b.style.width = "0%";
-      requestAnimationFrame(function () {
-        requestAnimationFrame(function () { b.style.width = v + "%"; });
-      });
-    });
-    $$("[data-reveal]", scope).forEach(function (el) { el.classList.add("is-revealed"); });
-  }
-
-  function mountComparator() {
-    var tabsTarget = $("[data-comparator-tabs]");
-    var gridTarget = $("[data-comparator]");
-    if (!tabsTarget || !gridTarget || !data.comparatorTabs || tabsTarget.children.length > 0) return;
-
-    tabsTarget.innerHTML = data.comparatorTabs.map(function (t, i) {
-      return '<button class="comp-tab' + (i === 0 ? " is-active" : "") + '" data-comp-tab="' + t.id + '">' + escHTML(t.label) + "</button>";
-    }).join("");
-
-    gridTarget.innerHTML = comparatorMetricsHTML(data.comparatorTabs[0].metrics);
-
-    tabsTarget.addEventListener("click", function (e) {
-      var btn = e.target.closest && e.target.closest("[data-comp-tab]");
-      if (!btn) return;
-      var id = btn.getAttribute("data-comp-tab");
-      var tabData = data.comparatorTabs.filter(function (t) { return t.id === id; })[0];
-      if (!tabData) return;
-      $$(".comp-tab", tabsTarget).forEach(function (b) { b.classList.toggle("is-active", b === btn); });
-      gridTarget.innerHTML = comparatorMetricsHTML(tabData.metrics);
-      playComparatorBars(gridTarget);
-    });
-  }
-
-  function caseCard(c) {
-    return (
-      '<article class="case-card glass" data-reveal>' +
-      '<div class="case-top"><div><h3>' + escHTML(c.company) + '</h3><div class="case-sector">' + escHTML(c.sector) + "</div></div>" +
-      '<div class="case-metric"><div class="num">' + escHTML(c.metric) + '</div><div class="lbl">' + escHTML(c.metricLabel) + "</div></div>" +
-      "</div>" +
-      '<div class="case-block"><b>Problema</b>' + escHTML(c.problem) + "</div>" +
-      '<div class="case-block"><b>Solución</b>' + escHTML(c.solution) + "</div>" +
-      '<div class="case-block"><b>Resultado</b>' + escHTML(c.result) + "</div>" +
-      "</article>"
-    );
-  }
-
-  function mountCases() {
-    var target = $("[data-cases]");
-    if (!target || target.children.length > 0 || !data.cases) return;
-    target.innerHTML = data.cases.map(caseCard).join("");
-  }
-
   function mountProcess() {
     var target = $("[data-process]");
     if (!target || target.children.length > 0 || !data.process) return;
@@ -735,29 +666,6 @@
   }
 
   /* ---------------------------------------------------------------
-     Comparator bars (tab switch just re-plays the fill animation)
-  --------------------------------------------------------------- */
-  function initComparator() {
-    var section = $(".comparator");
-    if (!section) return;
-    var bars = $$("[data-comp-bar]", section);
-    function play() {
-      bars.forEach(function (b) {
-        var v = b.getAttribute("data-comp-val");
-        b.style.width = "0%";
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () { b.style.width = v + "%"; });
-        });
-      });
-    }
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { play(); io.unobserve(e.target); } });
-    }, { threshold: 0.3 });
-    var grid = $("[data-comparator]");
-    if (grid) io.observe(grid);
-  }
-
-  /* ---------------------------------------------------------------
      Calculadora de ahorro
   --------------------------------------------------------------- */
   function initCalculator() {
@@ -842,16 +750,29 @@
   }
 
   /* ---------------------------------------------------------------
-     Cases horizontal scroll controls
+     Carruseles horizontales (soluciones)
   --------------------------------------------------------------- */
-  function initCasesControls() {
-    var track = $("[data-cases]");
-    var prev = $("[data-cases-prev]");
-    var next = $("[data-cases-next]");
-    if (!track || !prev || !next) return;
-    function amount() { return Math.min(440, track.clientWidth * 0.85); }
-    prev.addEventListener("click", function () { track.scrollBy({ left: -amount(), behavior: reduced ? "auto" : "smooth" }); });
-    next.addEventListener("click", function () { track.scrollBy({ left: amount(), behavior: reduced ? "auto" : "smooth" }); });
+  function initCarousels() {
+    $$("[data-carousel]").forEach(function (box) {
+      var track = $(".carousel-track", box);
+      var prev = $("[data-carousel-prev]", box);
+      var next = $("[data-carousel-next]", box);
+      if (!track || !prev || !next) return;
+
+      function amount() { return Math.min(440, track.clientWidth * 0.85); }
+      prev.addEventListener("click", function () { track.scrollBy({ left: -amount(), behavior: reduced ? "auto" : "smooth" }); });
+      next.addEventListener("click", function () { track.scrollBy({ left: amount(), behavior: reduced ? "auto" : "smooth" }); });
+
+      // Apagar las flechas cuando no hay más para ese lado
+      function sync() {
+        var max = track.scrollWidth - track.clientWidth;
+        prev.disabled = track.scrollLeft <= 8;
+        next.disabled = track.scrollLeft >= max - 8;
+      }
+      track.addEventListener("scroll", sync, { passive: true });
+      window.addEventListener("resize", sync);
+      sync();
+    });
   }
 
   /* ---------------------------------------------------------------
@@ -893,8 +814,6 @@
     safe(mountNav, "mountNav");
     safe(mountProblem, "mountProblem");
     safe(mountSolutions, "mountSolutions");
-    safe(mountComparator, "mountComparator");
-    safe(mountCases, "mountCases");
     safe(mountProcess, "mountProcess");
     safe(mountTech, "mountTech");
     safe(mountFaq, "mountFaq");
@@ -912,9 +831,8 @@
     safe(initCountUp, "initCountUp");
     safe(initSplitText, "initSplitText");
     safe(initMarquee, "initMarquee");
-    safe(initComparator, "initComparator");
     safe(initCalculator, "initCalculator");
-    safe(initCasesControls, "initCasesControls");
+    safe(initCarousels, "initCarousels");
     safe(initFaqAccordion, "initFaqAccordion");
 
     document.documentElement.classList.add("is-ready");

@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
-<link rel="stylesheet" href="styles.css?v=20260713f">
+<link rel="stylesheet" href="styles.css?v=20261017a">
 
 <meta property="og:title" content="Argent IA — Vendemos tiempo.">
 <meta property="og:description" content="Automatización e Inteligencia Artificial para empresas argentinas. Auditoría gratuita del tiempo y dinero que estás perdiendo.">
@@ -143,20 +143,14 @@
         <h2 data-reveal>Automatizaciones que ya tenemos listas para tu empresa</h2>
         <p data-reveal>No partimos de cero: cada solución nace de nuestra biblioteca propia de automatizaciones probadas. Así implementamos en semanas, no en meses.</p>
       </div>
-      <div class="solutions-grid" data-solutions></div>
-    </div>
-  </section>
-
-  <!-- ============================ COMPARADOR ============================ -->
-  <section class="section comparator section-light" id="comparador">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-reveal>Comparador interactivo</span>
-        <h2 data-reveal>Antes vs. después, en números</h2>
-        <p data-reveal>Elegí un proceso y mirá cómo cambian el tiempo, el costo, los errores y la velocidad al automatizarlo.</p>
+      <div class="carousel" data-carousel>
+        <div class="carousel-track solutions-track" data-solutions></div>
+        <div class="carousel-controls">
+          <button class="carousel-btn" data-carousel-prev aria-label="Solución anterior">←</button>
+          <button class="carousel-btn" data-carousel-next aria-label="Solución siguiente">→</button>
+          <span class="carousel-hint">Deslizá para ver todas</span>
+        </div>
       </div>
-      <div class="comp-tabs" data-comparator-tabs role="tablist" aria-label="Procesos a comparar"></div>
-      <div class="comp-grid" data-comparator></div>
     </div>
   </section>
 
@@ -191,6 +185,7 @@
             <div class="calc-hero-num" data-calc-yearly-money>$0</div>
             <div class="calc-hero-label">pesos perdidos por año, al ritmo actual</div>
           </div>
+          <div class="calc-rows">
           <div class="calc-result-row">
             <span class="calc-result-label">Dinero perdido por mes</span>
             <span class="calc-result-val money" data-calc-monthly-money>$0</span>
@@ -219,23 +214,8 @@
             <span class="calc-result-label">Repago estimado (meses)</span>
             <span class="calc-result-val roi" data-calc-payback>0</span>
           </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================ CASOS DE ÉXITO ============================ -->
-  <section class="section section-light" id="casos">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow" data-reveal>Casos de éxito</span>
-        <h2 data-reveal>Empresas argentinas que ya recuperaron su tiempo</h2>
-        <p data-reveal>Historias representativas del tipo de resultado que buscamos en cada implementación.</p>
-      </div>
-      <div class="cases-track" data-cases></div>
-      <div class="cases-controls">
-        <button data-cases-prev aria-label="Caso anterior">←</button>
-        <button data-cases-next aria-label="Caso siguiente">→</button>
       </div>
     </div>
   </section>
@@ -346,7 +326,7 @@
 
 <script defer src="lib/gsap.min.js"></script>
 <script defer src="lib/ScrollTrigger.min.js"></script>
-<script defer src="lib/manifest.js?v=20260713f"></script>
-<script defer src="main.js?v=20260713f"></script>
+<script defer src="lib/manifest.js?v=20261017a"></script>
+<script defer src="main.js?v=20261017a"></script>
 </body>
 </html>
