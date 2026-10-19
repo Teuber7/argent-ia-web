@@ -1,0 +1,5 @@
+# Argent IA — argent-ia.com.ar
+User-agent: *
+Allow: /
+
+Sitemap: https://argent-ia.com.ar/sitemap.xml
