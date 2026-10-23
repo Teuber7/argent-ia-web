@@ -58,13 +58,14 @@
    ============================================================= */
 *, *::before, *::after { box-sizing: border-box; margin: 0; }
 html {
+  background: var(--bg);
   -webkit-text-size-adjust: 100%;
   tab-size: 2;
   overflow-x: clip;
   scroll-behavior: smooth;
 }
 body {
-  background: var(--bg);
+  background: transparent;
   color: var(--ink);
   font-family: var(--sans);
   font-size: 16px;
@@ -134,14 +135,18 @@ input, textarea, select { font: inherit; color: inherit; }
 
 .section {
   position: relative;
-  padding-block: clamp(4.5rem, 9vw, 8.5rem);
+  padding-block: clamp(3rem, 5.5vw, 5.2rem);
 }
 .section-head {
-  max-width: 46rem;
-  margin-bottom: clamp(2.5rem, 5vw, 4.5rem);
+  max-width: 62rem; margin-inline: auto; text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 3.2rem);
 }
-.section-head h2 { font-size: clamp(2rem, 4.2vw, 3.2rem); margin-block: .9rem .8rem; }
-.section-head p { color: var(--ink-mute); font-size: 1.08rem; max-width: 40rem; }
+.section-head h2 {
+  font-size: clamp(1.8rem, 3.4vw, 2.75rem);
+  margin-block: .8rem .7rem;
+  text-wrap: balance;
+}
+.section-head p { color: var(--ink-mute); font-size: 1.08rem; max-width: 40rem; margin-inline: auto; }
 
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
@@ -241,25 +246,6 @@ input, textarea, select { font: inherit; color: inherit; }
 .orb:nth-child(2) { animation-duration: 12s; animation-delay: -4s; }
 
 /* =============================================================
-   5. Cursor
-   ============================================================= */
-.cursor {
-  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999;
-  display: none; mix-blend-mode: difference; opacity: 0;
-  transition: opacity .25s var(--ease-out);
-}
-.cursor.is-ready { opacity: 1; }
-@media (hover: hover) and (pointer: fine) { .cursor { display: block; } }
-.cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; will-change: transform; }
-.cursor-dot { width: 6px; height: 6px; margin: -3px; background: var(--ink); border-radius: 50%; }
-.cursor-ring {
-  width: 34px; height: 34px; margin: -17px; border: 1px solid var(--ink); border-radius: 50%;
-  transition: width .35s var(--ease-out), height .35s var(--ease-out), margin .35s var(--ease-out);
-}
-.cursor.is-interactive .cursor-ring { width: 54px; height: 54px; margin: -27px; }
-.has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
-
-/* =============================================================
    6. Nav
    ============================================================= */
 .nav {
@@ -337,8 +323,7 @@ input, textarea, select { font: inherit; color: inherit; }
   background:
     radial-gradient(circle 620px at var(--mx, 30%) var(--my, 30%), rgba(37, 99, 235,.35) 0%, transparent 60%),
     radial-gradient(circle 720px at calc(var(--mx, 30%) + 30%) calc(var(--my, 30%) + 20%), rgba(124, 194, 240,.16) 0%, transparent 60%),
-    radial-gradient(circle 640px at calc(var(--mx, 30%) - 10%) calc(var(--my, 30%) + 45%), rgba(240,180,41,.16) 0%, transparent 55%),
-    var(--bg);
+    radial-gradient(circle 640px at calc(var(--mx, 30%) - 10%) calc(var(--my, 30%) + 45%), rgba(240,180,41,.16) 0%, transparent 55%);
   filter: blur(70px) saturate(140%);
 }
 .hero-grid {
@@ -349,9 +334,18 @@ input, textarea, select { font: inherit; color: inherit; }
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 20%, transparent 80%);
 }
+
+/* Fondo interactivo de cubos: capa fija detras de TODA la pagina.
+   El <body> es transparente para dejarla ver; el color base vive en <html>. */
+.page-cubes {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  opacity: .75;
+}
+@media (max-width: 859px) { .page-cubes { opacity: .45; } }
+
 .particles { position: fixed; inset: 0; pointer-events: none; z-index: 1; mix-blend-mode: screen; }
 
-.hero-inner { position: relative; z-index: 2; will-change: transform, opacity; }
+.hero-inner { position: relative; z-index: 2; will-change: transform, opacity; text-align: center; }
 .hero .orb { will-change: transform; }
 
 /* Aurora — conic beam girando lento detrás del hero */
@@ -372,18 +366,18 @@ input, textarea, select { font: inherit; color: inherit; }
 
 .hero-title {
   font-size: clamp(2.6rem, 6.4vw, 5.6rem);
-  max-width: 20ch; margin: 1.1rem 0 1.4rem;
+  max-width: 20ch; margin: 1.1rem auto 1.4rem;
 }
 .hero-title em { font-style: normal; }
 .hero-sub {
   font-size: clamp(1.05rem, 1.6vw, 1.3rem);
   color: var(--ink-mute);
   max-width: 38rem;
-  margin-bottom: 2.4rem;
+  margin: 0 auto 2.4rem;
 }
-.hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 3.2rem; }
+.hero-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 3.2rem; }
 
-.hero-stats { display: grid; grid-template-columns: repeat(3, auto); gap: clamp(1.4rem, 4vw, 3.4rem); }
+.hero-stats { display: grid; grid-template-columns: repeat(3, auto); justify-content: center; gap: clamp(1.4rem, 4vw, 3.4rem); }
 .hero-stat-num { font-family: var(--mono); font-size: clamp(1.5rem, 2.6vw, 2.1rem); color: var(--ink); font-weight: 500; }
 .hero-stat-num .unit { font-size: .55em; color: var(--ink-mute); margin-left: .15em; }
 .hero-stat-label { font-size: .8rem; color: var(--ink-mute); margin-top: .3rem; }
@@ -593,7 +587,7 @@ input, textarea, select { font: inherit; color: inherit; }
 /* =============================================================
    14. Tecnología
    ============================================================= */
-.tech { border-block: 1px solid var(--line); background: var(--bg-2); }
+.tech { border-block: 1px solid var(--line); background: transparent; }
 .marquee { overflow: hidden; position: relative; }
 .marquee::before, .marquee::after {
   content: ""; position: absolute; top: 0; bottom: 0; width: 90px; z-index: 2; pointer-events: none;
@@ -639,30 +633,21 @@ input, textarea, select { font: inherit; color: inherit; }
    ============================================================= */
 .cta-final {
   position: relative; overflow: clip; isolation: isolate;
-  padding-block: clamp(5.5rem, 12vw, 10rem);
+  padding-block: clamp(3.2rem, 6vw, 5rem);
   text-align: center;
 }
-.cta-final::before {
-  content: ""; position: absolute; inset: -20% -10%; z-index: -1;
-  background:
-    radial-gradient(50% 60% at 30% 30%, rgba(37, 99, 235,.35), transparent 65%),
-    radial-gradient(45% 50% at 75% 70%, rgba(240,180,41,.22), transparent 65%);
-  filter: blur(90px) saturate(140%);
-  animation: meshShift 26s linear infinite;
-}
-@keyframes meshShift {
-  0%   { transform: rotate(0deg) scale(1); }
-  50%  { transform: rotate(180deg) scale(1.12); }
-  100% { transform: rotate(360deg) scale(1); }
-}
 .cta-final h2 {
-  font-size: clamp(2.3rem, 6vw, 4.6rem);
+  font-size: clamp(2.2rem, 5.2vw, 3.8rem);
   max-width: 18ch;
   margin-inline: auto;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1rem;
 }
-.cta-final .lead { color: var(--ink-mute); font-size: 1.1rem; max-width: 34rem; margin: 0 auto 2.6rem; }
-.cta-final-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+.cta-final .lead { color: var(--ink-mute); font-size: 1.05rem; max-width: 34rem; margin: 0 auto 1.8rem; }
+.cta-final-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.cta-final-slogan {
+  background: var(--brand-gradient);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 .cta-final-tag {
   font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 700;
   background: linear-gradient(110deg, var(--silver) 20%, var(--gold) 50%, var(--silver) 80%);
@@ -676,7 +661,8 @@ input, textarea, select { font: inherit; color: inherit; }
    17. Footer
    ============================================================= */
 .footer { border-top: 1px solid var(--line); padding-block: 3.4rem 2.4rem; }
-.footer-top { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2.6rem; margin-bottom: 2.6rem; }
+.footer-top { display: grid; grid-template-columns: 1fr; gap: 2.2rem; margin-bottom: 2rem; }
+@media (min-width: 900px) { .footer-top { grid-template-columns: 1.25fr .75fr; align-items: start; } }
 .footer-brand p { color: var(--ink-mute); font-size: .9rem; max-width: 24rem; margin-top: .8rem; }
 .footer-cols { display: flex; flex-wrap: wrap; gap: 3rem; }
 .footer-col h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); font-family: var(--mono); margin-bottom: 1rem; font-weight: 500; }
@@ -698,6 +684,21 @@ input, textarea, select { font: inherit; color: inherit; }
   overflow: hidden; will-change: transform;
 }
 .footer-socials { display: flex; gap: 1rem; }
+
+/* Quién está detrás — a la misma altura que el resto del pie */
+.footer-main { display: flex; flex-wrap: wrap; gap: 2.4rem; align-content: start; }
+.footer-quien { display: flex; flex-direction: column; align-items: stretch; }
+.footer-credencial { position: relative; min-height: 330px; margin-top: -2.6rem; }
+.footer-quien-texto h4 {
+  font-size: .78rem; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--ink-mute); font-family: var(--mono); font-weight: 500; margin-bottom: .7rem;
+}
+.footer-quien-nombre { font-size: 1.25rem; font-weight: 600; color: var(--ink); margin-bottom: .25rem; }
+.footer-quien-texto p { color: var(--ink-soft); font-size: .92rem; }
+@media (max-width: 899px) {
+  .footer-credencial { display: none; }
+  .footer-quien-texto { margin-top: 1.4rem; }
+}
 
 /* =============================================================
    17b. Secciones elevadas — oscuras, apenas más claras que el fondo
@@ -722,7 +723,7 @@ input, textarea, select { font: inherit; color: inherit; }
   background:
     radial-gradient(55% 45% at 88% 0%, rgba(240, 180, 41, 0.10), transparent 70%),
     radial-gradient(45% 40% at 0% 100%, rgba(124, 194, 240, 0.12), transparent 70%),
-    linear-gradient(180deg, #0e1016 0%, #16191f 100%);
+    linear-gradient(180deg, rgba(14, 16, 22, .18) 0%, rgba(22, 25, 31, .18) 100%);
   color: var(--ink);
   border-block: 1px solid var(--line);
 }

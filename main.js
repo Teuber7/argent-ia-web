@@ -149,44 +149,6 @@
   }
 
   /* ---------------------------------------------------------------
-     Cursor
-  --------------------------------------------------------------- */
-  function initCursor() {
-    var root = $("[data-cursor-root]");
-    if (!root || !fineHover) return;
-    document.documentElement.classList.add("has-cursor");
-    var ring = root.querySelector(".cursor-ring");
-    var dot = root.querySelector(".cursor-dot");
-    var tx = 0, ty = 0, rx = 0, ry = 0, firstMove = false;
-
-    window.addEventListener("mousemove", function (e) {
-      tx = e.clientX; ty = e.clientY;
-      if (dot) dot.style.transform = "translate3d(" + tx + "px," + ty + "px,0)";
-      if (!firstMove) {
-        firstMove = true; rx = tx; ry = ty;
-        if (ring) ring.style.transform = "translate3d(" + rx + "px," + ry + "px,0)";
-        root.classList.add("is-ready");
-      }
-    }, { passive: true });
-
-    function tick() {
-      rx += (tx - rx) * 0.18; ry += (ty - ry) * 0.18;
-      if (ring) ring.style.transform = "translate3d(" + rx + "px," + ry + "px,0)";
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-
-    var HOVERABLES = "[data-cursor], .btn, a[href], .sol-card, .faq-q, button";
-    document.addEventListener("mouseover", function (e) { if (e.target.closest && e.target.closest(HOVERABLES)) root.classList.add("is-interactive"); });
-    document.addEventListener("mouseout", function (e) {
-      var related = e.relatedTarget;
-      if (e.target.closest && e.target.closest(HOVERABLES) && !(related && related.closest && related.closest(HOVERABLES))) {
-        root.classList.remove("is-interactive");
-      }
-    });
-  }
-
-  /* ---------------------------------------------------------------
      Nav (scroll state + mobile menu)
   --------------------------------------------------------------- */
   function initNav() {
@@ -252,6 +214,35 @@
       requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
+  }
+
+  /* ---------------------------------------------------------------
+     Fondo de cubos del hero (WebGL, archivo lib/cubes.js)
+  --------------------------------------------------------------- */
+  function initCubes() {
+    var host = $("[data-cubes]");
+    if (!host || typeof window.mountCubes !== "function") return;
+    var chico = window.matchMedia("(max-width: 859px)").matches;
+    window.mountCubes(host, {
+      gridSize: chico ? 7 : 10,
+      gap: 0.22,
+      faceColor: "#0b0d13",
+      edgeColor: "#39404f",
+      rippleColor: "#f0b429",
+      edgeWidth: 1,
+      faceOpacity: 1,
+      shading: 0.7,
+      maxAngle: 42,
+      radius: 3,
+      speed: 1,
+      bounce: 0.4,
+      brush: 1,
+      perspective: 0.12,
+      rippleSpeed: 1,
+      autoAnimate: true,
+      rippleOnClick: true,
+      intro: true
+    });
   }
 
   /* ---------------------------------------------------------------
@@ -772,6 +763,32 @@
       track.addEventListener("scroll", sync, { passive: true });
       window.addEventListener("resize", sync);
       sync();
+
+      // --- Movimiento automático ---
+      // Avanza solo mientras el carrusel está a la vista y nadie lo está tocando.
+      if (reduced) return;
+      var pausado = false;
+      var aLaVista = false;
+
+      function avanzar() {
+        if (pausado || !aLaVista || document.hidden) return;
+        var max = track.scrollWidth - track.clientWidth;
+        if (max <= 8) return;
+        if (track.scrollLeft >= max - 8) track.scrollTo({ left: 0, behavior: "smooth" });
+        else track.scrollBy({ left: amount(), behavior: "smooth" });
+      }
+      setInterval(avanzar, 4200);
+
+      ["pointerenter", "pointerdown", "focusin"].forEach(function (ev) {
+        box.addEventListener(ev, function () { pausado = true; });
+      });
+      ["pointerleave", "focusout"].forEach(function (ev) {
+        box.addEventListener(ev, function () { pausado = false; });
+      });
+
+      new IntersectionObserver(function (entries) {
+        aLaVista = entries.some(function (e) { return e.isIntersecting; });
+      }, { threshold: 0.25 }).observe(box);
     });
   }
 
@@ -818,11 +835,10 @@
     safe(mountTech, "mountTech");
     safe(mountFaq, "mountFaq");
 
-    safe(initCursor, "initCursor");
     safe(initNav, "initNav");
     safe(initSmoothAnchors, "initSmoothAnchors");
     safe(initHeroGradient, "initHeroGradient");
-    safe(initParticles, "initParticles");
+    safe(initCubes, "initCubes");
     safe(initScrollProgress, "initScrollProgress");
     safe(initScrollFX, "initScrollFX"); // before initReveals: story lines opt out of IO reveal
     safe(initScrollSpy, "initScrollSpy");

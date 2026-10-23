@@ -13,7 +13,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap">
 
-<link rel="stylesheet" href="styles.css?v=20261017a">
+<link rel="stylesheet" href="styles.css?v=20261022l">
 
 <link rel="canonical" href="https://argent-ia.com.ar/">
 
@@ -41,13 +41,10 @@
 <body>
 <a href="#main" class="skip-link">Saltar al contenido</a>
 
+<div class="page-cubes" data-cubes aria-hidden="true"></div>
+
 <div class="scroll-progress" aria-hidden="true"><span data-scroll-progress></span></div>
 <div class="spotlight" aria-hidden="true"></div>
-
-<div class="cursor" data-cursor-root aria-hidden="true">
-  <span class="cursor-dot"></span>
-  <span class="cursor-ring"></span>
-</div>
 
 <header class="nav">
   <div class="container nav-inner">
@@ -85,8 +82,6 @@
   <section class="hero" id="top">
     <div class="hero-gradient" aria-hidden="true"></div>
     <div class="hero-aurora" aria-hidden="true"></div>
-    <div class="hero-grid" aria-hidden="true"></div>
-    <div data-particles aria-hidden="true"></div>
     <div class="orb orb-azul" data-parallax="-18" style="width:420px;height:420px;top:8%;right:-6%" aria-hidden="true"></div>
     <div class="orb orb-gold" data-parallax="-34" style="width:300px;height:300px;bottom:12%;left:-4%" aria-hidden="true"></div>
 
@@ -159,7 +154,7 @@
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-reveal>Soluciones</span>
-        <h2 data-reveal>Automatizaciones que ya tenemos listas para tu empresa</h2>
+        <h2 data-reveal>Automatizaciones listas para usar</h2>
         <p data-reveal>No partimos de cero: cada solución nace de nuestra biblioteca propia de automatizaciones probadas. Así implementamos en semanas, no en meses.</p>
       </div>
       <div class="carousel" data-carousel>
@@ -178,7 +173,7 @@
     <div class="container">
       <div class="section-head">
         <span class="eyebrow" data-reveal>Calculadora de ahorro</span>
-        <h2 data-reveal>¿Cuánto tiempo y dinero está perdiendo tu empresa?</h2>
+        <h2 data-reveal>¿Cuánto está perdiendo tu empresa?</h2>
         <p data-reveal>Movés los controles y calculamos en vivo cuánto podrías recuperar automatizando.</p>
       </div>
 
@@ -260,7 +255,6 @@
       <div class="section-head">
         <span class="eyebrow" data-reveal>Tecnología</span>
         <h2 data-reveal>Las herramientas detrás de cada automatización</h2>
-        <p data-reveal>Elegimos la tecnología según el problema, no al revés. Estas son algunas de las que más usamos.</p>
       </div>
     </div>
     <div class="marquee">
@@ -281,17 +275,13 @@
 
   <!-- ============================ CTA FINAL ============================ -->
   <section class="cta-final" id="cta">
-    <div class="orb orb-cyan" data-parallax="-24" style="width:360px;height:360px;top:6%;left:-5%" aria-hidden="true"></div>
-    <div class="orb orb-gold" data-parallax="-40" style="width:280px;height:280px;bottom:8%;right:-4%" aria-hidden="true"></div>
     <div class="container" data-cta-content>
-      <p class="eyebrow" data-reveal>Última llamada</p>
-      <h2 data-reveal>Cada día que pasa sin automatizar es tiempo que no vuelve.</h2>
-      <p class="lead" data-reveal>Pedí tu auditoría gratuita hoy. En menos de una semana tenés un informe con el ahorro potencial de tu empresa, en horas y en pesos.</p>
+      <h2 class="cta-final-slogan" data-reveal>Vendemos tiempo.</h2>
+      <p class="lead" data-reveal>Treinta minutos, sin costo, y te vas con el número de cuántas horas y cuántos pesos está perdiendo tu empresa.</p>
       <div class="cta-final-actions" data-reveal>
-        <a href="mailto:contacto@argentia.com.ar?subject=Quiero%20mi%20auditor%C3%ADa%20gratuita" class="btn btn-gold">Pedí tu auditoría gratis</a>
+        <a href="mailto:contacto@argentia.com.ar?subject=Quiero%20ganar%20tiempo" class="btn btn-gold">Quiero ganar tiempo</a>
         <a data-brand-whatsapp href="https://wa.me/5491100000000" target="_blank" rel="noopener" class="btn btn-ghost">Hablar por WhatsApp</a>
       </div>
-      <p class="cta-final-tag" data-cta-tag data-reveal>Vendemos tiempo.</p>
     </div>
   </section>
 
@@ -300,6 +290,7 @@
 <footer class="footer">
   <div class="container">
     <div class="footer-top">
+      <div class="footer-main">
       <div class="footer-brand">
         <a href="#top" class="brand">
           <svg class="brand-mark" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -311,13 +302,6 @@
         <p>Automatización e Inteligencia Artificial para empresas argentinas. No vendemos IA: vendemos el tiempo que te devuelve.</p>
       </div>
       <div class="footer-cols">
-        <div class="footer-col">
-          <h4>Navegación</h4>
-          <a href="#soluciones">Soluciones</a>
-          <a href="#calculadora">Calculadora de ahorro</a>
-          <a href="#casos">Casos de éxito</a>
-          <a href="#faq">FAQ</a>
-        </div>
         <div class="footer-col">
           <h4>Contacto</h4>
           <a href="mailto:contacto@argentia.com.ar" data-brand-email>contacto@argentia.com.ar</a>
@@ -334,6 +318,15 @@
           <a href="privacidad.html">Política de privacidad</a>
         </div>
       </div>
+      </div>
+      <div class="footer-quien">
+        <div class="footer-credencial" data-lanyard aria-hidden="true"></div>
+        <div class="footer-quien-texto">
+          <h4>Quién está detrás</h4>
+          <p class="footer-quien-nombre">Iván Teuber</p>
+          <p>Técnico en Sistemas · Lic. en Inteligencia Artificial (en curso)</p>
+        </div>
+      </div>
     </div>
     <div class="footer-bottom">
       <span>© <span data-year>2026</span> Argent IA. Todos los derechos reservados.</span>
@@ -345,7 +338,40 @@
 
 <script defer src="lib/gsap.min.js"></script>
 <script defer src="lib/ScrollTrigger.min.js"></script>
-<script defer src="lib/manifest.js?v=20261017a"></script>
-<script defer src="main.js?v=20261017a"></script>
+<script defer src="lib/manifest.js?v=20261022l"></script>
+<script defer src="lib/cubes.js?v=20261022l"></script>
+<script defer src="main.js?v=20261022l"></script>
+
+<!-- Credencial 3D: three.js se descarga solo al llegar a la seccion, y solo en escritorio -->
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js" } }
+</script>
+<script type="module">
+  const host = document.querySelector("[data-lanyard]");
+  if (host && window.matchMedia("(min-width: 900px)").matches) {
+    const io = new IntersectionObserver(async (entries, obs) => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      obs.disconnect();
+      try {
+        const { mountLanyard } = await import("./lib/lanyard.js?v=20261022l");
+        mountLanyard(host, {
+          frontImage: "assets/img/credencial-frente.png",
+          backImage: "assets/img/credencial-frente.svg",
+          cardColor: "#ffffff",
+          finish: "glossy",
+          cornerRadius: 0.3,
+          size: 0.62,
+          anchor: "center",
+          strapLength: 0.42,
+          strapColor: "#0b0d13",
+          strapWidth: 0.65,
+          metal: "silver",
+          gravity: 1, damping: 0.5, elasticity: 0.5, breeze: 0.4
+        });
+      } catch (err) { /* sin 3D la seccion igual funciona */ }
+    }, { rootMargin: "500px" });
+    io.observe(host);
+  }
+</script>
 </body>
 </html>

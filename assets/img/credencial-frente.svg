@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="900" viewBox="0 0 640 900">
+  <defs>
+    <linearGradient id="g" x1="0" y1="900" x2="640" y2="0" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C7CBD6"/><stop offset="1" stop-color="#F0B429"/>
+    </linearGradient>
+    <linearGradient id="foto" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#eef1f6"/><stop offset="1" stop-color="#dde3ec"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="900" fill="#f7f8fa"/>
+  <g transform="translate(44,56) scale(1.5)">
+    <path d="M6 26 15 6 18 6 15.6 11.2 22 26 18.3 26 14 15.8 10.1 24" stroke="url(#g)" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round" fill="none"/>
+    <circle cx="19.4" cy="10.6" r="2.1" fill="url(#g)"/>
+  </g>
+  <text x="596" y="84" text-anchor="end" font-family="'Inter',system-ui,sans-serif" font-size="26" fill="#8d93a1">@IvanTeuber</text>
+  <circle cx="320" cy="400" r="150" fill="url(#foto)"/>
+  <text x="320" y="440" text-anchor="middle" font-family="'Space Grotesk','Inter',system-ui,sans-serif" font-size="96" font-weight="700" fill="#b9c0cc">IT</text>
+  <text x="320" y="650" text-anchor="middle" font-family="'Space Grotesk','Inter',system-ui,sans-serif" font-size="56" font-weight="700" fill="#101724">Iván Teuber</text>
+  <text x="320" y="700" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="27" fill="#51617a">Técnico en Sistemas</text>
+  <text x="320" y="738" text-anchor="middle" font-family="'Inter',system-ui,sans-serif" font-size="27" fill="#51617a">Lic. en Inteligencia Artificial</text>
+  <rect x="200" y="782" width="240" height="2" fill="#dfe4ec"/>
+  <text x="320" y="828" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="24" fill="#8d93a1">argent-ia.com.ar</text>
+</svg>
